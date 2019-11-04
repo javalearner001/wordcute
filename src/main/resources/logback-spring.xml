@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="false" scanPeriod="60 seconds" debug="false">
+	<springProperty scope="context" name="logLevel" source="log.level"/>
+	<springProperty scope="context" name="logPath" source="log.path"/>
+	<!-- 定义日志的根目录 -->
+	<property name="LOG_HOME" value="${logPath}"/>
+
+	<appender name="STAOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%black %red(%d{yyyy-MM-dd HH:mm:ss}) %green([%thread])[%X{sessionid}] %highlight(%-5level) %boldMagenta(%logger) - %cyan(%msg%n)</pattern>
+        </layout>
+	</appender>
+
+    <!-- ERROR 输入到文件，按日期和文件大小 -->
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder charset="utf-8">
+            <pattern>%black %red(%d{yyyy-MM-dd HH:mm:ss.SSS}) %magenta(%X) %highlight(%-5level) %boldMagenta(%logger) - %cyan(%msg%n)</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_HOME}/error/error.%d{yyyy-MM-dd}.log</FileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+
+    <!-- 按照小时回滚文件 -->
+	<appender name="FILE_TIME" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		 <File>${LOG_HOME}/application</File>
+		  <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+ 		      <FileNamePattern>${LOG_HOME}/application.%d{yyyy-MM-dd_HH}.log.gz</FileNamePattern>
+		  </rollingPolicy>
+		  <!-- 日志格式 -->
+		  <layout class="ch.qos.logback.classic.PatternLayout">
+			  <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] [%X{sessionid}] %-5level %logger{36} - %msg%n</pattern>
+		  </layout>
+	</appender>
+
+
+    <logger name="org.apache.ibatis" level="INFO" additivity="false" />
+    <logger name="org.mybatis.spring" level="INFO" additivity="false" />
+    <logger name="com.github.miemiedev.mybatis.paginator" level="INFO" additivity="false" />
+
+	<root level="${logLevel}">
+		<appender-ref ref="STAOUT" />
+        <appender-ref ref="ERROR" />
+		<appender-ref ref="FILE_TIME" />
+	</root>
+</configuration> 

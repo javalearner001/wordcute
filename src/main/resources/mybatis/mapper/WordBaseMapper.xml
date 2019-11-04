@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.sun.wordcute.dao.WordBaseMapper">
+    <select id="listWordBaseByEasy" resultType="com.sun.wordcute.entity.pojo.WordBase" parameterType="com.sun.wordcute.entity.dto.WordBaseParam">
+        select *
+        from word_base
+        where tags = #{tag}
+        limit #{startIndex} ,#{pageSize}
+    </select>
+
+    <insert id="insertIntoWordBase" parameterType="com.sun.wordcute.entity.pojo.WordBase" >
+        insert into
+        word_base
+        (
+        word, translation, phonetic, tags
+        )
+        values
+        <foreach collection="list" index="index" item="item"  separator="," >
+            (#{item.word},#{item.translation},#{item.phonetic},#{item.tags})
+        </foreach>
+    </insert>
+</mapper>
