@@ -17,4 +17,6 @@ public class WordBaseParam implements java.io.Serializable {
     private Integer startIndex;
 
     private Integer pageSize;
+
+    private Integer pageNum;
 }

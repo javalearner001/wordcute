@@ -2,6 +2,7 @@ package com.sun.wordcute.controller;
 
 import com.sun.wordcute.entity.common.BaseResult;
 import com.sun.wordcute.entity.common.ErrorStatusEnum;
+import com.sun.wordcute.entity.dto.WordBaseParam;
 import com.sun.wordcute.entity.pojo.WordBase;
 import com.sun.wordcute.service.WordBaseService;
 import org.slf4j.Logger;
@@ -33,6 +34,21 @@ public class WordBaseController {
         BaseResult result = new BaseResult();
         try {
             result = wordBaseService.listWordBaseByEasy(pageSize,pageNum);
+        }catch (Exception e){
+            logger.error("查询CET4-EASY 单词异常=====ERROR=====",e);
+            result.setErrorCode(ErrorStatusEnum.SYSTEM_ERROR_STATUS.getStatus());
+            result.setMessage(ErrorStatusEnum.SYSTEM_ERROR_STATUS.getDescription());
+            return result;
+        }
+        return result;
+    }
+
+    @PostMapping("/postWordBaseEasy")
+    public BaseResult listWordBaseEasy(@RequestBody WordBaseParam wordBaseParam){
+        logger.info("查询CET4-EASY 单词入参=====START=====,tag={}",wordBaseParam);
+        BaseResult result = new BaseResult();
+        try {
+            result = wordBaseService.listWordBaseByEasy(wordBaseParam.getPageSize(),wordBaseParam.getPageNum());
         }catch (Exception e){
             logger.error("查询CET4-EASY 单词异常=====ERROR=====",e);
             result.setErrorCode(ErrorStatusEnum.SYSTEM_ERROR_STATUS.getStatus());
