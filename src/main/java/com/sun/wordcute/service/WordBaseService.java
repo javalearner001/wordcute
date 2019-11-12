@@ -14,4 +14,6 @@ import java.util.List;
 public interface WordBaseService {
 
     BaseResult<List<WordBase>> listWordBaseByEasy(Integer pageSize,Integer pageNum);
+
+    BaseResult<List<WordBase>> redisListWordBaseByEasy(Integer pageSize,Integer pageNum);
 }

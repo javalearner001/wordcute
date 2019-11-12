@@ -33,7 +33,7 @@ public class WordBaseController {
         logger.info("查询CET4-EASY 单词入参=====START=====,tag={}",tag);
         BaseResult result = new BaseResult();
         try {
-            result = wordBaseService.listWordBaseByEasy(pageSize,pageNum);
+            result = wordBaseService.redisListWordBaseByEasy(pageSize,pageNum);
         }catch (Exception e){
             logger.error("查询CET4-EASY 单词异常=====ERROR=====",e);
             result.setErrorCode(ErrorStatusEnum.SYSTEM_ERROR_STATUS.getStatus());
