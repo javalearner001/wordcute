@@ -79,9 +79,13 @@ public class WordBaseServiceImpl implements WordBaseService {
             ValueOperations<String,String> valueOperations = redisTemplate.opsForValue();
             List<WordBase> resultList = null;
             if (keyFlag){
+                long t1 = System.currentTimeMillis();
                 String value = valueOperations.get("easyList-"+pageBean.getStartIndex());
                 resultList = JSONObject.parseArray(value, WordBase.class);
+                long t2 = System.currentTimeMillis();
+                logger.info("Redis执行时间=====spendTime={}",(t2 - t1));
             }else {
+                long t1 = System.currentTimeMillis();
                 WordBaseParam baseParam = new WordBaseParam();
                 baseParam.setStartIndex(pageBean.getStartIndex());
                 baseParam.setTag(10);
@@ -90,6 +94,8 @@ public class WordBaseServiceImpl implements WordBaseService {
                 //redis缓存
                 String wordBaseList = JSON.toJSONString(resultList);
                 valueOperations.set("easyList-"+pageBean.getStartIndex(),wordBaseList);
+                long t2 = System.currentTimeMillis();
+                logger.info("数据库执行时间=====spendTime={}",(t2 - t1));
             }
 
             if (!ObjectUtils.isEmpty(resultList)){
