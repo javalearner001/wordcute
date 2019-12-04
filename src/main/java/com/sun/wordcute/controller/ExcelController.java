@@ -37,11 +37,11 @@ public class ExcelController {
 
         try {
             String templatePath = this.getClass().getClassLoader().getResource("excel").getPath();
-            File template = new File(templatePath, "导出表格模板.xlsx");
+            File template = new File(templatePath, "new.xls");
 
             InputStream is = new FileInputStream(template);
 
-            OutputStream os = new FileOutputStream("target/classes/excel/aaa.xlsx");
+            OutputStream os = new FileOutputStream("target/classes/excel/aaa.xls");
 
             Map<String , Object> model=new HashMap<String , Object>();
             model.put("wordBases", wordBases);
@@ -60,11 +60,14 @@ public class ExcelController {
 
             //下面步骤为浏览器下载部分
             //指定数据生成后的文件输入流（将上述out的路径作为文件的输入流）
-            FileInputStream fileInputStream = new FileInputStream("target/classes/excel/aaa.xlsx");
-            //导出excel文件，设置文件名
-            String filename = URLEncoder.encode("购物车信息.xlsx", "UTF-8");
+            FileInputStream fileInputStream = new FileInputStream("target/classes/excel/aaa.xls");
+
             //设置下载头
-            response.setHeader("Content-Disposition", "attachment;filename=" + filename);
+            response.setHeader("content-Type", "application/vnd.ms-excel");
+            // 下载文件的默认名称
+            response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode("购物车数据","UTF-8") + ".xls");
+            //编码
+            response.setCharacterEncoding("UTF-8");
             ServletOutputStream outputStream = response.getOutputStream();
             //将文件写入浏览器
             byte[] bys = new byte[fileInputStream.available()];
