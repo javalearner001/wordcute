@@ -41,7 +41,7 @@ public class ExcelController {
             InputStream is = this.getClass().getClassLoader().getResourceAsStream("excel/new.xls");
             //InputStream is = new FileInputStream(template);
 
-            OutputStream os = new FileOutputStream("target/classes/excel/aaa.xls");
+            OutputStream os = new FileOutputStream("target/aaa.xls");
 
             Map<String , Object> model=new HashMap<String , Object>();
             model.put("wordBases", wordBases);
@@ -60,7 +60,7 @@ public class ExcelController {
 
             //下面步骤为浏览器下载部分
             //指定数据生成后的文件输入流（将上述out的路径作为文件的输入流）
-            FileInputStream fileInputStream = new FileInputStream("target/classes/excel/aaa.xls");
+            FileInputStream fileInputStream = new FileInputStream("target/aaa.xls");
 
             //设置下载头
             response.setHeader("content-Type", "application/vnd.ms-excel");
