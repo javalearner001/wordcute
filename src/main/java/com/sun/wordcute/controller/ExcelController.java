@@ -36,10 +36,10 @@ public class ExcelController {
         List<WordBase> wordBases = listWordBase();
 
         try {
-            String templatePath = this.getClass().getClassLoader().getResource("excel").getPath();
-            File template = new File(templatePath, "new.xls");
-
-            InputStream is = new FileInputStream(template);
+            /*String templatePath = this.getClass().getClassLoader().getResource("excel").getPath();
+            File template = new File(templatePath, "new.xls");*/
+            InputStream is = this.getClass().getClassLoader().getResourceAsStream("excel/new.xls");
+            //InputStream is = new FileInputStream(template);
 
             OutputStream os = new FileOutputStream("target/classes/excel/aaa.xls");
 
