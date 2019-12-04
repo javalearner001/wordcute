@@ -65,7 +65,7 @@ public class ExcelController {
             //设置下载头
             response.setHeader("content-Type", "application/vnd.ms-excel");
             // 下载文件的默认名称
-            response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode("购物车数据","UTF-8") + ".xls");
+            response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode("购物车数据","UTF-8") + ".xlsx");
             //编码
             response.setCharacterEncoding("UTF-8");
             ServletOutputStream outputStream = response.getOutputStream();
