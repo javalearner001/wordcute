@@ -23,6 +23,7 @@ mybatis:
   mapper-locations: classpath*:mybatis/mapper/*.xml
 
 
+
 log:
   path: /data/log/wordcute
   level: info
